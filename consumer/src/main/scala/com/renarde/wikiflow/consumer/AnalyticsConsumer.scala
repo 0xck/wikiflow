@@ -28,6 +28,7 @@ object AnalyticsConsumer extends App with LazyLogging {
     .option ("kafka.bootstrap.servers", "kafka:9092")
     .option ("subscribe", "wikiflow-topic")
     .option ("startingOffsets", "earliest")
+    .option ("failOnDataLoss", "false")
     .load ()
 
   // please edit the code below
@@ -77,15 +78,15 @@ object AnalyticsConsumer extends App with LazyLogging {
     .withColumn ("load_dttm", current_timestamp ())
 
   val transformedStream: DataFrame = countedData
-    .withWatermark ("load_dttm", "1 minute")
-    .groupBy (window ($"load_dttm", "1 minute", "30 seconds"), $"type")
+    .withWatermark ("load_dttm", "30 seconds")
+    .groupBy (window ($"load_dttm", "30 seconds", "10 seconds"), $"type")
     .count ()
 
   transformedStream.writeStream
     .outputMode ("append")
     .format ("delta")
-    .option ("checkpointLocation", "/storage/analytics-consumer/checkpoints")
     .option ("mergeSchema", "true")
+    .option ("checkpointLocation", "/storage/analytics-consumer/checkpoints")
     .start ("/storage/analytics-consumer/output")
 
   spark.streams.awaitAnyTermination ()
