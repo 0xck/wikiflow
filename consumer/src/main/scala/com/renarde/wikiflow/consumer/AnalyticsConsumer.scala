@@ -58,7 +58,7 @@ object AnalyticsConsumer extends App with LazyLogging {
     .add ("server_name", StringType)
     .add ("server_script_path", StringType)
     .add ("server_url", StringType)
-    .add ("timestamp", LongType)
+    .add ("timestamp", TimestampType)
     .add ("title", StringType)
     .add ("type", StringType)
     .add ("user", StringType)
@@ -76,8 +76,8 @@ object AnalyticsConsumer extends App with LazyLogging {
     .where (($"bot" === false) and ($"type" =!= "142"))
 
   val transformedStream: DataFrame = countedData
-    .withWatermark ("timestamp", "1 minute")
-    .groupBy (window ($"timestamp", "1 minute", "30 seconds"), $"type")
+    .withWatermark ("timestamp", "10 minute")
+    .groupBy (window ($"timestamp", "10 minute", "5 minute"), $"type")
     .count ()
     .withColumn ("load_dttm", current_timestamp ())
 
