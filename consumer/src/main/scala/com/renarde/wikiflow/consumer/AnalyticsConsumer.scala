@@ -78,7 +78,7 @@ object AnalyticsConsumer extends App with LazyLogging {
 
   val transformedStream: DataFrame = countedData
     .withWatermark ("load_dttm", "10 minute")
-    .groupBy (window ($"load_dttm", "10 minute", "5 minute") as "load_dttm", $"type")
+    .groupBy (window ($"load_dttm", "10 minute", "5 minute"), $"type")
     .count ()
 
   transformedStream.writeStream
