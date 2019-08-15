@@ -85,7 +85,7 @@ object AnalyticsConsumer extends App with LazyLogging {
     .outputMode ("append")
     .format ("delta")
     .option ("checkpointLocation", "/storage/analytics-consumer/checkpoints")
-    //    .option("mergeSchema", "true")
+    .option ("mergeSchema", "true")
     .start ("/storage/analytics-consumer/output")
 
   spark.streams.awaitAnyTermination ()
