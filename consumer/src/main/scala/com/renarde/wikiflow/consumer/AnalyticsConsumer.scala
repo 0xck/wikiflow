@@ -77,7 +77,9 @@ object AnalyticsConsumer extends App with LazyLogging {
     .groupBy ($"type")
     .count ()
 
-  val transformedStream: DataFrame = countedData.withColumn ("load_dttm", current_timestamp ())
+  val transformedStream: DataFrame = countedData
+    .withColumn ("load_dttm", current_timestamp ())
+    .withWatermark ("load_dttm", "10 seconds")
 
   transformedStream.writeStream
     .outputMode ("append")
