@@ -1,7 +1,7 @@
 package com.renarde.wikiflow.consumer
 
 import com.typesafe.scalalogging.LazyLogging
-import org.apache.spark.sql.functions.{current_timestamp, from_json, window}
+import org.apache.spark.sql.functions.{current_timestamp, from_json}
 import org.apache.spark.sql.types._
 import org.apache.spark.sql.{DataFrame, SparkSession}
 
@@ -78,7 +78,7 @@ object AnalyticsConsumer extends App with LazyLogging {
 
   val transformedStream: DataFrame = countedData
     .withWatermark ("load_dttm", "10 minute")
-    .groupBy (window ($"load_dttm", "10 minute", "5 minute"), $"type")
+    .groupBy ($"load_dttm", $"type")
     .count ()
 
   transformedStream.writeStream
