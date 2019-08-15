@@ -60,8 +60,7 @@ object LegacyConsumer extends App with LazyLogging {
     val df = spark.read.json (rdd.map (x => x.value))
 
     logger.warn ("===" * 10)
-//    df.schema.foreach (field => logger.warn (s"Field data: ${field.name} with type ${field.dataType.simpleString}"))
-    df.schema.foreach (field => logger.warn (s"{df.printSchema()}"))
+    df.schema.foreach (field => logger.warn (s"Field data: ${field.name} with type ${field.dataType.simpleString}"))
     logger.warn ("===" * 10)
 
     if (df.columns.contains ("bot")) { // check the input data for structure

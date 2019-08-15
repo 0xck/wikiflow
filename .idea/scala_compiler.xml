@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ScalaCompilerConfiguration">
+    <profile name="Maven 1" modules="consumer">
+      <option name="postfixOps" value="true" />
+      <option name="implicitConversions" value="true" />
+      <option name="higherKinds" value="true" />
+      <option name="deprecationWarnings" value="true" />
+      <option name="uncheckedWarnings" value="true" />
+      <option name="explainTypeErrors" value="true" />
+      <parameters>
+        <parameter value="-dependencyfile" />
+        <parameter value="$PROJECT_DIR$/consumer/target/.scala_dependencies" />
+        <parameter value="-target:jvm-1.8&quot;" />
+        <parameter value="-encoding UTF-8" />
+        <parameter value="-future" />
+        <parameter value="-Xcheckinit" />
+        <parameter value="-Xfuture" />
+        <parameter value="-Xlint:adapted-args" />
+        <parameter value="-Xlint:by-name-right-associative" />
+        <parameter value="-Xlint:constant" />
+        <parameter value="-Xlint:delayedinit-select" />
+        <parameter value="-Xlint:inaccessible" />
+        <parameter value="-Xlint:infer-any" />
+        <parameter value="-Xlint:missing-interpolator" />
+        <parameter value="-Xlint:package-object-classes" />
+        <parameter value="-Xlint:private-shadow" />
+        <parameter value="-Xlint:stars-align" />
+        <parameter value="-Xlint:type-parameter-shadow" />
+        <parameter value="-Xlint:unsound-match" />
+        <parameter value="-Yno-adapted-args" />
+        <parameter value="-Ywarn-dead-code" />
+        <parameter value="-Ywarn-nullary-override" />
+        <parameter value="-Ywarn-nullary-unit" />
+        <parameter value="-Ywarn-value-discard" />
+        <parameter value="-Ywarn-unused" />
+      </parameters>
+    </profile>
+    <profile name="Maven 2" modules="transporter" />
+  </component>
+</project>
