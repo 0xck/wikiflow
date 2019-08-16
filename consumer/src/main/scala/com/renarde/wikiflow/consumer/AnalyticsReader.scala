@@ -1,6 +1,7 @@
 package com.renarde.wikiflow.consumer
 
 import com.typesafe.scalalogging.LazyLogging
+import org.apache.spark.sql.types.StructType
 import org.apache.spark.sql.{DataFrame, SparkSession}
 
 
@@ -18,7 +19,10 @@ object AnalyticsReader extends App with LazyLogging {
 
   logger.info ("Initializing Analytics Reader")
 
+  val schema: StructType = spark.read.parquet ("/storage/analytics-consumer/output").schema
+
   val inputStream: DataFrame = spark.readStream
+    .schema (schema)
     .parquet ("/storage/analytics-consumer/output")
 
   val consoleOutput = inputStream.writeStream
