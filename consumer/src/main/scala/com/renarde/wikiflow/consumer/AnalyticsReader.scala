@@ -1,6 +1,7 @@
 package com.renarde.wikiflow.consumer
 
 import com.typesafe.scalalogging.LazyLogging
+import org.apache.spark.sql.streaming.StreamingQuery
 import org.apache.spark.sql.types.StructType
 import org.apache.spark.sql.{DataFrame, SparkSession}
 
@@ -25,7 +26,9 @@ object AnalyticsReader extends App with LazyLogging {
     .schema (schema)
     .parquet ("/storage/analytics-consumer/output")
 
-  val consoleOutput = inputStream.writeStream
+  val data: DataFrame = inputStream.select ("type", "count", "origin_time_range", "load_dttm")
+
+  val consoleOutput: StreamingQuery = data.writeStream
     .outputMode ("append")
     .format ("console")
     .start ()
