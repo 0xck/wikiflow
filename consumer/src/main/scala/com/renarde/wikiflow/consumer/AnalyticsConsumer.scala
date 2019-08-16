@@ -78,8 +78,8 @@ object AnalyticsConsumer extends App with LazyLogging {
     .withColumn ("origin_time", from_unixtime ($"timestamp") cast TimestampType)
 
   val transformedStream: DataFrame = cleanedData
-    .withWatermark ("origin_time", "1 minute")
-    .groupBy (window ($"origin_time", "1 minute"), $"type")
+    .withWatermark ("origin_time", "10 seconds")
+    .groupBy (window ($"origin_time", "10 seconds"), $"type")
     .count ()
     .withColumn ("load_dttm", current_timestamp ())
 
