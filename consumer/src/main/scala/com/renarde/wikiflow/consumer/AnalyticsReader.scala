@@ -16,6 +16,9 @@ object AnalyticsReader extends App with LazyLogging {
     .master ("local[2]")
     .getOrCreate ()
 
+  import spark.implicits._
+
+
   spark.sparkContext.setLogLevel ("WARN")
 
   logger.info ("Initializing Analytics Reader")
@@ -26,7 +29,8 @@ object AnalyticsReader extends App with LazyLogging {
     .schema (schema)
     .parquet ("/storage/analytics-consumer/output")
 
-  val data: DataFrame = inputStream.select ("type", "count", "origin_time_range", "load_dttm")
+  val data: DataFrame = inputStream
+    .select ($"type", $"count", $"window" as "origin_time_range", $"load_dttm")
 
   val consoleOutput: StreamingQuery = data.writeStream
     .outputMode ("append")
