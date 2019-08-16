@@ -38,5 +38,4 @@ object AnalyticsReader extends App with LazyLogging {
     .start ()
 
   spark.streams.awaitAnyTermination ()
-
 }
