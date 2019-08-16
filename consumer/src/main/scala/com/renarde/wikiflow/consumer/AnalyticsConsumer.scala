@@ -86,7 +86,6 @@ object AnalyticsConsumer extends App with LazyLogging {
   transformedStream.writeStream
     //    .outputMode ("append")
     .format ("delta")
-    .option ("mergeSchema", "true")
     .option ("checkpointLocation", "/storage/analytics-consumer/checkpoints")
     .start ("/storage/analytics-consumer/output")
 
