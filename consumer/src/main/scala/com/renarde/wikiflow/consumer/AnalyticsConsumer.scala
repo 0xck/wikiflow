@@ -84,7 +84,7 @@ object AnalyticsConsumer extends App with LazyLogging {
     .withColumn ("load_dttm", current_timestamp ())
 
   transformedStream.writeStream
-    //    .outputMode ("append")
+    .outputMode ("append")
     .format ("delta")
     .option ("checkpointLocation", "/storage/analytics-consumer/checkpoints")
     .start ("/storage/analytics-consumer/output")
