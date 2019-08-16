@@ -75,16 +75,16 @@ object AnalyticsConsumer extends App with LazyLogging {
 
   val cleanedData: DataFrame = obtainedData.select ("*")
     .where (($"bot" === false) and ($"type" =!= "142"))
-    .withColumn ("origin_time", from_unixtime ($"timestamp"))
+    .withColumn ("origin_time", from_unixtime ($"timestamp") cast TimestampType)
 
   val transformedStream: DataFrame = cleanedData
-    .withWatermark ("origin_time", "5 minutes")
-    .groupBy (window ($"origin_time", "5 minutes"), $"type")
+    .withWatermark ("origin_time", "1 minute")
+    .groupBy (window ($"origin_time", "1 minute"), $"type")
     .count ()
     .withColumn ("load_dttm", current_timestamp ())
 
   transformedStream.writeStream
-    .outputMode ("append")
+    //    .outputMode ("append")
     .format ("delta")
     .option ("mergeSchema", "true")
     .option ("checkpointLocation", "/storage/analytics-consumer/checkpoints")
