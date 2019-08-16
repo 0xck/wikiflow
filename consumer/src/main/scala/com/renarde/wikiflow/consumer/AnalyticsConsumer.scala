@@ -12,8 +12,10 @@ object AnalyticsConsumer extends App with LazyLogging {
 
   val spark: SparkSession = SparkSession.builder ()
     .appName (appName)
-    .config ("spark.driver.memory", "5g")
-    .master ("local[2]")
+    .config ("spark.driver.memory", "2g")
+    .config ("spark.memory.offHeap.enabled", value = true)
+    .config ("spark.memory.offHeap.size", "4g")
+    .master ("local[1]")
     .getOrCreate
 
   import spark.implicits._
