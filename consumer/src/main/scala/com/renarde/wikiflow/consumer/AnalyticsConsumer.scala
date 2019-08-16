@@ -14,14 +14,14 @@ object AnalyticsConsumer extends App with LazyLogging {
     .appName (appName)
     .config ("spark.driver.memory", "5g")
     .master ("local[2]")
-    .getOrCreate
+    .getOrCreate ()
 
   import spark.implicits._
 
 
   spark.sparkContext.setLogLevel ("WARN")
 
-  logger.info ("Initializing Structured consumer")
+  logger.info ("Initializing Analytics consumer")
 
   val inputStream: DataFrame = spark.readStream
     .format ("kafka")
